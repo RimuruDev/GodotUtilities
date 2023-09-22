@@ -16,6 +16,25 @@ namespace RimuruDev.GodotUtilities
 {
     public static class NodeExtension
     {
+        /// <summary>
+        /// Finding a node, and safely retrieving the script from it.
+        /// </summary>
+        /// <example>
+        /// <code>
+        ///public override void _Ready()
+        ///{
+        ///    if (this.TryGetNode("TestComponent", out TestComponent testComponent))
+        ///        testComponent.DoSomething();
+        ///    else
+        ///        Debug.Log("Unable to get TestComponent node");
+        ///
+        ///    if (this.TryGetNode("PlayerBody", out PlayerBodyNode playerBody))
+        ///        playerBody.PrintPlayerName();
+        ///    else
+        ///        Debug.Log("Unable to get Player node");
+        ///}
+        /// </code>
+        /// </example>
         public static bool TryGetNode<TComponent>(this Node thisNode, string nodeName, out TComponent node) where TComponent : class
         {
             if (thisNode == null)
