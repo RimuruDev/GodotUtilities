@@ -53,5 +53,83 @@ namespace RimuruDev.GodotUtilities
             node = component;
             return true;
         }
+        
+        /// <summary>
+        /// Gets the owner node, then searches for the specified Node and returns it.
+        /// </summary>
+        /// <example>
+        /// <code>
+        ///Hierarchy on scene -> Game -> WorldLayer/Timer
+        ///public sealed class FindHeroIcon : Node2D
+        ///{
+        ///    private const string TimerPath = "WorldLayer/Timer";
+        ///    private Timer timer;
+        /// 
+        ///    public override void _Ready()
+        ///    {
+        ///        timer = this.GetNodeChildByOwner Timer>(TimerPath);
+        ///    }
+        ///}
+        /// </code>
+        /// </example>
+        public static TNode GetNodeChildByOwner<TNode>(this Node node, string pathToNode) where TNode : Node
+        {
+            if (node == null)
+                throw new NullReferenceException("The node to which the action is attached is null.");
+
+            if (string.IsNullOrWhiteSpace(pathToNode))
+                throw new ArgumentException(nameof(pathToNode));
+
+            var owner = node.GetOwner<Node>();
+
+            if (owner == null)
+                throw new NullReferenceException("Owner not found!");
+
+            var targetNode = owner.GetNode<TNode>(pathToNode);
+
+            if (targetNode == null)
+                throw new NullReferenceException($"Node by path {pathToNode} not found!");
+
+            return targetNode;
+        }
+
+        /// <summary>
+        /// Gets the owner node, then searches for the specified Node2d and returns it.
+        /// </summary>
+        /// <example>
+        /// <code>
+        ///Hierarchy on scene -> Game -> WorldLayer/Sprite
+        ///public sealed class FindHeroIcon : Node2D
+        ///{
+        ///    private const string HeroIconPath = "WorldLayer/Sprite";
+        ///    private Sprite heroSprite;
+        ///
+        ///    public override void _Ready()
+        ///    {
+        ///        heroSprite = this.GetNodeChildByOwner2D Sprite>(HeroIconPath);
+        ///    }
+        ///}
+        /// </code>
+        /// </example>
+        public static TNode2d GetNodeChildByOwner2D<TNode2d>(this Node2D node, string pathToNode) where TNode2d : Node2D
+        {
+            if (node == null)
+                throw new NullReferenceException("The node to which the action is attached is null.");
+
+            if (string.IsNullOrWhiteSpace(pathToNode))
+                throw new ArgumentException(nameof(pathToNode));
+
+            var owner = node.GetOwner<Node>();
+
+            if (owner == null)
+                throw new NullReferenceException("Owner not found!");
+
+            var targetNode = owner.GetNode<TNode2d>(pathToNode);
+
+            if (targetNode == null)
+                throw new NullReferenceException($"Node by path {pathToNode} not found!");
+
+            return targetNode;
+        }
     }
 }
