@@ -1,2 +1,4 @@
 # GodotUtilities
  
+- NodeExtension
+- Debug
